@@ -1,4 +1,4 @@
-from djoser.serializers import UserCreateSerializer as BaseUserRegistrationSerializer
+from djoser.serializers import UserCreateSerializer as BaseUserRegistrationSerializer, UserCreateSerializer
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
@@ -8,8 +8,11 @@ User = get_user_model()
 
 
 class UserRegistrationSerializer(BaseUserRegistrationSerializer):
-    pass
+    class Meta(UserCreateSerializer.Meta):
+        fields = ("email", "first_name", "last_name", "password", "phone")
 
 
 class CurrentUserSerializer(serializers.ModelSerializer):
-    pass
+    class Meta(UserCreateSerializer.Meta):
+        model = User
+        fields = "__all__"
